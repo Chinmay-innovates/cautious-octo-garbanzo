@@ -27,7 +27,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "next-env.d.ts",
-    "C:\\temp\\next-build/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }
