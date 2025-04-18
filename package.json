@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build",
+		"build": "payload generate:types && next build",
 		"start": "next start",
 		"lint": "next lint",
 		"generate:types": "payload generate:types"
@@ -47,6 +47,7 @@
 		"cmdk": "^1.1.1",
 		"date-fns": "^4.1.0",
 		"embla-carousel-react": "^8.6.0",
+		"eslint-plugin-react-hooks": "^5.2.0",
 		"graphql": "^16.8.1",
 		"input-otp": "^1.4.2",
 		"lucide-react": "^0.488.0",
