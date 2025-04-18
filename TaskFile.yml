@@ -1,0 +1,29 @@
+version: "3"
+
+tasks:
+  format:
+    desc: Format code using Prettier
+    cmds:
+      - bunx prettier --write "**/*.{js,jsx,ts,tsx,css,scss,md,json}"
+
+  lint:
+    desc: Lint code using ESLint
+    cmds:
+      - bunx eslint . --ext .js,.jsx,.ts,.tsx
+
+  check:
+    desc: Check formatting and linting without writing changes
+    cmds:
+      - bunx prettier --check "**/*.{js,jsx,ts,tsx,css,scss,md,json}"
+      - bunx eslint . --ext .js,.jsx,.ts,.tsx
+
+  fix:
+    desc: Auto-fix lint issues
+    cmds:
+      - bunx eslint . --ext .js,.jsx,.ts,.tsx --fix
+
+  format:all:
+    desc: Run formatter and linter fix
+    cmds:
+      - task: format
+      - task: fix
