@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { Category } from "@/payload-types";
-import { CategoriesGetManyOutput } from "@/modules/categories/types";
+import Link from 'next/link';
+import { Category } from '@/payload-types';
+import { CategoriesGetManyOutput } from '@/modules/categories/types';
 
 interface Props {
   category: CategoriesGetManyOutput[1];
@@ -12,9 +12,8 @@ interface Props {
 }
 
 export const SubCategoryMenu = ({ category, isOpen, position }: Props) => {
-  if (!isOpen || !category.subcategories || category.subcategories.length === 0)
-    return null;
-  const backgroundColor = category.color || "#F5F5F5";
+  if (!isOpen || !category.subcategories || category.subcategories.length === 0) return null;
+  const backgroundColor = category.color || '#F5F5F5';
   return (
     <div
       className="fixed z-100"

@@ -1,8 +1,8 @@
-import { Suspense } from "react";
-import { Footer } from "./footer";
-import { Navbar } from "./navbar";
-import { SearchFilters, SearchFiltersSkeleton } from "./search-filters";
-import { getQueryClient, HydrateClient, trpc } from "@/trpc/server";
+import { Suspense } from 'react';
+import { Footer } from './footer';
+import { Navbar } from './navbar';
+import { SearchFilters, SearchFiltersSkeleton } from './search-filters';
+import { getQueryClient, HydrateClient, trpc } from '@/trpc/server';
 
 interface Props {
   children: React.ReactNode;

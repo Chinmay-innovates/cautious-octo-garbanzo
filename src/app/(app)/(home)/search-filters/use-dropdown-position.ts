@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import { RefObject } from 'react';
 
 export const useDropdownPosition = (
   ref: RefObject<HTMLDivElement | null> | RefObject<HTMLButtonElement>,
