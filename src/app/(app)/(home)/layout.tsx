@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
-import { Footer } from './footer';
-import { Navbar } from './navbar';
-import { SearchFilters, SearchFiltersSkeleton } from './search-filters';
+import { Footer } from '@/modules/home/ui/components/footer';
+import { Navbar } from '@/modules/home/ui/components/navbar';
+import { SearchFilters, SearchFiltersSkeleton } from '@/modules/home/ui/components/search-filters';
 import { getQueryClient, HydrateClient, trpc } from '@/trpc/server';
 
 interface Props {
