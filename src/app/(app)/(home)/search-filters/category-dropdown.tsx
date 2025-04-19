@@ -30,22 +30,16 @@ export const CategoryDropdown = ({
 	const onMouseLeave = () => setIsOpen(false);
 	const position = getDropdownPosition();
 
-	// const toggleDropdown = () => {
-	// 	if (category.subcategories?.docs?.length) {
-	// 		setIsOpen((prev) => !prev);
-	// 	}
-	// };
-
 	return (
 		<div
 			ref={dropdownRef}
 			className="relative"
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
-			// onClick={toggleDropdown}
 		>
 			<div className="relative">
 				<Button
+					asChild
 					variant={"elevated"}
 					className={cn(
 						"h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
