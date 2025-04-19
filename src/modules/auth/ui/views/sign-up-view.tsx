@@ -19,8 +19,9 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useTRPC } from '@/trpc/client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { CheckCircle, XCircle } from 'lucide-react';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -29,13 +30,20 @@ const poppins = Poppins({
 export const SignUpView = () => {
   const trpc = useTRPC();
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   const register = useMutation(
     trpc.auth.register.mutationOptions({
       onError: (error) => {
-        toast.error(error.message);
+        toast.error(error.message, {
+          icon: <XCircle className="text-red-500" />,
+        });
       },
-      onSuccess: () => {
-        toast.success('Account created successfully!');
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
+        toast.success('Account created successfully', {
+          icon: <CheckCircle className="text-green-500" />,
+        });
         router.push('/');
       },
     }),

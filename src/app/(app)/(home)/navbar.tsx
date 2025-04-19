@@ -9,6 +9,8 @@ import { cn } from '@/lib/utils';
 import { NavbarSidebar } from './navbar-sidebar';
 import { useState } from 'react';
 import { MenuIcon } from 'lucide-react';
+import { useTRPC } from '@/trpc/client';
+import { useQuery } from '@tanstack/react-query';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -45,6 +47,8 @@ const navbarItems = [
 export const Navbar = () => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const trpc = useTRPC();
+  const session = useQuery(trpc.auth.session.queryOptions());
   return (
     <nav className="h-20 flex border-b justify-between font-medium bg-white">
       <Link href={'/'} className="pl-6 flex items-center">
@@ -58,28 +62,22 @@ export const Navbar = () => {
           </NavbarItem>
         ))}
       </div>
-      <div className="hidden lg:flex">
-        <Button
-          asChild
-          variant={'secondary'}
-          className="border-l border-t-0 border-b-0 border-r-0 
-                    px-12 h-full rounded-none bg-white hover:bg-pink-400 transition-colors text-lg"
-        >
-          <Link prefetch href={'/sign-in'}>
+      {session.data?.user ? (
+        <div className="hidden lg:flex">
+          <NavButton href="/admin" variant="black">
+            Dashboard
+          </NavButton>
+        </div>
+      ) : (
+        <div className="hidden lg:flex">
+          <NavButton href="/sign-in" prefetch>
             Log in
-          </Link>
-        </Button>
-        <Button
-          asChild
-          className="border-l border-t-0 border-b-0 border-r-0 
-                    px-12 h-full rounded-none bg-black text-white
-                    hover:text-black hover:bg-pink-400 transition-colors text-lg"
-        >
-          <Link prefetch href={'/sign-up'}>
+          </NavButton>
+          <NavButton href="/sign-up" variant="black" prefetch>
             Start selling
-          </Link>
-        </Button>
-      </div>
+          </NavButton>
+        </div>
+      )}
       <div className="flex lg:hidden items-center pr-3">
         <Button
           variant={'ghost'}
@@ -90,5 +88,33 @@ export const Navbar = () => {
         </Button>
       </div>
     </nav>
+  );
+};
+
+const NavButton = ({
+  href,
+  children,
+  variant = 'default',
+  prefetch = false,
+}: {
+  href: string;
+  children: React.ReactNode;
+  variant?: 'default' | 'black';
+  prefetch?: boolean;
+}) => {
+  const base =
+    'border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none transition-colors text-lg';
+
+  const variants = {
+    default: 'bg-white text-black hover:bg-pink-400',
+    black: 'bg-black text-white hover:text-black hover:bg-pink-400',
+  };
+
+  return (
+    <Button asChild className={cn(base, variants[variant])}>
+      <Link prefetch={prefetch} href={href}>
+        {children}
+      </Link>
+    </Button>
   );
 };
