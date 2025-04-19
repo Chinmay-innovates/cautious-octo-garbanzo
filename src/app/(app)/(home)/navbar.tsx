@@ -64,12 +64,18 @@ export const Navbar = () => {
       </div>
       {session.data?.user ? (
         <div className="hidden lg:flex">
-          <NavButton href="/admin" variant="black" children="Dashboard" />
+          <NavButton href="/admin" variant="black">
+            Dashboard
+          </NavButton>
         </div>
       ) : (
         <div className="hidden lg:flex">
-          <NavButton href="/sign-in" prefetch children="Log in" />
-          <NavButton href="/sign-up" variant="black" prefetch children="Start selling" />
+          <NavButton href="/sign-in" prefetch>
+            Log in
+          </NavButton>
+          <NavButton href="/sign-up" variant="black" prefetch>
+            Start selling
+          </NavButton>
         </div>
       )}
       <div className="flex lg:hidden items-center pr-3">
