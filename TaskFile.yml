@@ -9,18 +9,18 @@ tasks:
   lint:
     desc: Lint code using ESLint
     cmds:
-      - bunx eslint . --ext .js,.jsx,.ts,.tsx
+      - bun lint . --ext .js,.jsx,.ts,.tsx
 
   check:
     desc: Check formatting and linting without writing changes
     cmds:
       - bunx prettier --check "**/*.{js,jsx,ts,tsx,css,scss,md,json}"
-      - bunx eslint . --ext .js,.jsx,.ts,.tsx
+      - bun lint . --ext .js,.jsx,.ts,.tsx
 
   fix:
     desc: Auto-fix lint issues
     cmds:
-      - bunx eslint . --ext .js,.jsx,.ts,.tsx --fix
+      - bun lint . --ext .js,.jsx,.ts,.tsx --fix
 
   format:all:
     desc: Run formatter and linter fix
