@@ -3,12 +3,12 @@ import { ListFilterIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { CategoryDropdown } from "./category-dropdown";
 import { Button } from "@/components/ui/button";
-import { CustomCategory } from "../types";
 import { cn } from "@/lib/utils";
 import { CategoriesSidebar } from "./categories-sidebar";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 interface Props {
-  data: CustomCategory[];
+  data: CategoriesGetManyOutput;
 }
 export const Categories = ({ data }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -56,11 +56,7 @@ export const Categories = ({ data }: Props) => {
   }, [data.length]);
   return (
     <div className="relative w-full">
-      <CategoriesSidebar
-        data={data}
-        open={isSidebarOpen}
-        onOpenChange={setIsSidebarOpen}
-      />
+      <CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
       {/* Hidden div to measure all items */}
       <div
         ref={measureRef}
