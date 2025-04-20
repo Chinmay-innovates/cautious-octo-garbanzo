@@ -79,6 +79,7 @@ export const Categories = ({ data }: Props) => {
         onMouseLeave={() => setIsAnyHovered(false)}
         className="flex items-center flex-nowrap"
       >
+        {/* //TODO Hardcode "All" button */}
         {data.slice(0, visibleCount).map((category) => (
           <div key={category.id}>
             <CategoryDropdown
