@@ -20,7 +20,7 @@ import { Input } from '@/components/ui/input';
 import { useTRPC } from '@/trpc/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCustomToast } from '@/hooks/use-my-toast';
-import { LOCKED_AUTH } from '../../constants';
+import { LOCKED_AUTH } from '@/constants';
 
 const poppins = Poppins({
   subsets: ['latin'],

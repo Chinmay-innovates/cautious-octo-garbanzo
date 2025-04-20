@@ -30,7 +30,7 @@ export const SearchInput = ({ disabled }: Props) => {
       >
         <ListFilter />
       </Button>
-      {session.data?.user && (
+      {typeof window !== 'undefined' && session.data?.user && (
         <Button asChild variant={'elevated'}>
           <Link href={'/library'}>
             <BookmarkCheckIcon />
