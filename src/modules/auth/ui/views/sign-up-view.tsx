@@ -20,8 +20,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useTRPC } from '@/trpc/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { useCustomToast } from '@/hooks/use-my-toast';
+import { USERNAME_TAKEN } from '../../constants';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -31,19 +31,21 @@ export const SignUpView = () => {
   const trpc = useTRPC();
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { error, success, info } = useCustomToast();
 
   const register = useMutation(
     trpc.auth.register.mutationOptions({
-      onError: (error) => {
-        toast.error(error.message, {
-          icon: <XCircle className="text-red-500" />,
-        });
+      onError: ({ shape }) => {
+        if (!shape) return;
+        if (shape.message === USERNAME_TAKEN) {
+          info('Change your username', { description: shape.message });
+          return;
+        }
+        error('Register failed', { description: shape.message });
       },
       onSuccess: async () => {
         await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
-        toast.success('Account created successfully', {
-          icon: <CheckCircle className="text-green-500" />,
-        });
+        success('Account created successfully');
         router.push('/');
       },
     }),

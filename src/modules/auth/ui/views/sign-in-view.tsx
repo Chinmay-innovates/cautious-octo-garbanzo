@@ -19,8 +19,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useTRPC } from '@/trpc/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { useCustomToast } from '@/hooks/use-my-toast';
+import { LOCKED_AUTH } from '../../constants';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -30,25 +30,22 @@ export const SignInView = () => {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { success, error, warning } = useCustomToast();
   const login = useMutation(
     trpc.auth.login.mutationOptions({
-      onError: (error) => {
-        toast.error('Login failed', {
-          className: 'bg-red-600 text-white',
-          description: error.message,
-          descriptionClassName: 'text-red-100',
-          icon: <XCircle className="text-red-500" />,
-        });
+      onError: ({ shape, data }) => {
+        if (!shape || !data) return;
+        if (shape && data.stack?.includes(LOCKED_AUTH)) {
+          warning('Invalid credentials', {
+            description: shape.message,
+          });
+          return;
+        }
+        error('Login failed', { description: shape.message });
       },
       onSuccess: async () => {
         await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
-
-        toast.success('Welcome back!', {
-          className: 'bg-black text-white',
-          description: 'Logged in successfully',
-          descriptionClassName: 'text-neutral-300',
-          icon: <CheckCircle className="text-green-500" />,
-        });
+        success('Welcome back!', { description: 'Logged in successfully' });
         router.push('/');
       },
     }),

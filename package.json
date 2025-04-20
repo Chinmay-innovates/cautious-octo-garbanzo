@@ -11,7 +11,7 @@
     "generate:types": "payload generate:types",
     "db:fresh": "payload migrate:fresh",
     "db:seed": "bun run src/seed.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write . --check"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",

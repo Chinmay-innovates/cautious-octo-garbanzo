@@ -26,7 +26,12 @@ export default function RootLayout({
       >
         <TRPCReactProvider>
           {children}
-          <Toaster />
+          <Toaster
+            toastOptions={{
+              className: 'bg-white text-black border border-neutral-200 shadow-md',
+              descriptionClassName: '!text-neutral-700',
+            }}
+          />
         </TRPCReactProvider>
       </body>
     </html>
