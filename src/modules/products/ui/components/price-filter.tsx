@@ -43,7 +43,7 @@ export const PriceFilter = ({ minPrice, maxPrice, onMinPriceChange, onMaxPriceCh
         />
       </div>
       <div className="flex flex-col gap-2">
-        <Label className="font-medium text-base">Maximun price</Label>
+        <Label className="font-medium text-base">Maximum price</Label>
         <Input
           type="text"
           placeholder="∞"

@@ -21,7 +21,7 @@ import { Input } from '@/components/ui/input';
 import { useTRPC } from '@/trpc/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCustomToast } from '@/hooks/use-my-toast';
-import { USERNAME_TAKEN } from '../../constants';
+import { USERNAME_TAKEN } from '@/constants';
 
 const poppins = Poppins({
   subsets: ['latin'],

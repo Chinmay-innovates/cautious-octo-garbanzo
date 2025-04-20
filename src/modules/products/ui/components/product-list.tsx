@@ -1,6 +1,7 @@
 'use client';
 
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
+import { useProductFilters } from '@/modules/products/hooks/use-product-filters';
 import { useTRPC } from '@/trpc/client';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -8,10 +9,12 @@ interface Props {
   categorySlug?: string;
 }
 export const ProductList = ({ categorySlug }: Props) => {
+  const [filters] = useProductFilters();
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(
     trpc.products.getMany.queryOptions({
       categorySlug,
+      ...filters,
     }),
   );
   return (
