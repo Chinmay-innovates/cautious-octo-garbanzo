@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { DM_Sans } from 'next/font/google';
 import { TRPCReactProvider } from '@/trpc/client';
 import { Toaster } from '@/components/ui/sonner';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { cn } from '@/lib/utils';
 import './globals.css';
 
@@ -27,15 +28,17 @@ export default function RootLayout({
       <body
         className={cn('bg-white text-slate-900 antialiased custom-selection', dmSans.className)}
       >
-        <TRPCReactProvider>
-          {children}
-          <Toaster
-            toastOptions={{
-              className: 'bg-white text-black border border-neutral-200 shadow-md',
-              descriptionClassName: '!text-neutral-700',
-            }}
-          />
-        </TRPCReactProvider>
+        <NuqsAdapter>
+          <TRPCReactProvider>
+            {children}
+            <Toaster
+              toastOptions={{
+                className: 'bg-white text-black border border-neutral-200 shadow-md',
+                descriptionClassName: '!text-neutral-700',
+              }}
+            />
+          </TRPCReactProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );
