@@ -22,7 +22,7 @@ export const Tenants: CollectionConfig = {
       unique: true,
       required: true,
       admin: {
-        description: 'This is the subdmoin of your store(e.g. [slug].funroad.com)',
+        description: 'This is the subdomin of your store(e.g. [slug].funroad.com)',
       },
     },
     {
@@ -43,7 +43,7 @@ export const Tenants: CollectionConfig = {
       type: 'checkbox',
       admin: {
         readOnly: true,
-        description: 'Yu cannot create products until you submit your Stripe details',
+        description: 'You cannot create products until you submit your Stripe details',
       },
     },
   ],
