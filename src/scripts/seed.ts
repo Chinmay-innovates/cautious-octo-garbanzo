@@ -1,5 +1,6 @@
 import { getPayload } from 'payload';
 import config from '@payload-config';
+import { Category } from '../payload-types';
 
 const categories = [
   {
@@ -140,18 +141,87 @@ const categories = [
 const seed = async () => {
   const payload = await getPayload({ config });
 
-  for (const category of categories) {
-    const parentCategory = await payload.create({
-      collection: 'categories',
+  // Seed admin user
+  const existingAdmin = await payload.find({
+    collection: 'users',
+    where: { email: { equals: 'admin@demo.com' } },
+    limit: 1,
+  });
+
+  if (!existingAdmin.docs.length) {
+    const adminTenant = await payload.create({
+      collection: 'tenants',
       data: {
-        name: category.name,
-        slug: category.slug,
-        color: category.color,
-        parent: null,
+        name: 'Admin',
+        slug: 'admin',
+        stripeAccountId: 'admin',
       },
     });
+    await payload.create({
+      collection: 'users',
+      data: {
+        email: 'admin@demo.com',
+        password: 'demo',
+        username: 'admin',
+        roles: ['super-admin'],
+        tenants: [
+          {
+            tenant: adminTenant.id,
+          },
+        ],
+      },
+    });
+    console.log('✅ Created admin user');
+  } else {
+    console.log('ℹ️  Admin user already exists. Skipping.');
+  }
+
+  // Seed categories
+  for (const category of categories) {
+    let parentCategory: Category | undefined;
+
+    // Check if parent category already exists
+    const existingParent = await payload.find({
+      collection: 'categories',
+      where: { slug: { equals: category.slug } },
+      limit: 1,
+    });
+
+    if (existingParent.docs.length) {
+      parentCategory = existingParent.docs[0];
+      console.log(`ℹ️  Category "${category.name}" already exists. Skipping.`);
+    } else {
+      parentCategory = await payload.create({
+        collection: 'categories',
+        data: {
+          name: category.name,
+          slug: category.slug,
+          color: category.color,
+          parent: null,
+        },
+      });
+      console.log(`✅ Created category: ${category.name}`);
+    }
+
+    if (!parentCategory) {
+      console.warn(
+        `⚠️ Skipping subcategories for "${category.name}" — parent was not created or found.`,
+      );
+      continue;
+    }
 
     for (const subcategory of category.subcategories || []) {
+      const existingSub = await payload.find({
+        collection: 'categories',
+        where: { slug: { equals: subcategory.slug } },
+        limit: 1,
+      });
+
+      if (existingSub.docs.length) {
+        console.log(`ℹ️  Subcategory "${subcategory.name}" already exists. Skipping.`);
+        continue;
+      }
+
       await payload.create({
         collection: 'categories',
         data: {
@@ -160,15 +230,17 @@ const seed = async () => {
           parent: parentCategory.id,
         },
       });
+
+      console.log(`✅ Created subcategory: ${subcategory.name}`);
     }
   }
 };
 
 try {
   await seed();
-  console.log('Seeded categories successfully!');
+  console.log('🎉 All seeding complete!');
   process.exit(0);
 } catch (error) {
-  console.error('Error seeding categories:', error);
+  console.error('❌ Error seeding categories:', error);
   process.exit(1);
 }
