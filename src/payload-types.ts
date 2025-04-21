@@ -161,13 +161,13 @@ export interface Tenant {
    */
   name: string;
   /**
-   * This is the subdmoin of your store(e.g. [slug].funroad.com)
+   * This is the subdomin of your store(e.g. [slug].funroad.com)
    */
   slug: string;
   image?: (string | null) | Media;
   stripeAccountId: string;
   /**
-   * Yu cannot create products until you submit your Stripe details
+   * You cannot create products until you submit your Stripe details
    */
   stripeDetailsSubmitted?: boolean | null;
   updatedAt: string;
