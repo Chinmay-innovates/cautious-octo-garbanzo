@@ -5,3 +5,4 @@ out
 public
 coverage
 *.log
+src/payload-types.ts
