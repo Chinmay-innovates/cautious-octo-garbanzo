@@ -5,23 +5,13 @@ import { CategoriesGetManyOutput } from '@/modules/categories/types';
 interface Props {
   category: CategoriesGetManyOutput[1];
   isOpen: boolean;
-  position: {
-    top: number;
-    left: number;
-  };
 }
 
-export const SubCategoryMenu = ({ category, isOpen, position }: Props) => {
+export const SubCategoryMenu = ({ category, isOpen }: Props) => {
   if (!isOpen || !category.subcategories || category.subcategories.length === 0) return null;
   const backgroundColor = category.color || '#F5F5F5';
   return (
-    <div
-      className="fixed z-100"
-      style={{
-        top: position.top,
-        left: position.left,
-      }}
-    >
+    <div className="absolute z-100 top-[100%] left-0">
       <div className="h-3 w-60" />
       <div
         style={{
