@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 
 interface Props {
   children: React.ReactNode;
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 const Layout = async ({ children, params }: Props) => {
   const { slug } = await params;

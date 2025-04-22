@@ -1,6 +1,5 @@
 import { spawn } from 'child_process';
 
-// scripts/dbReset.ts
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 const runCommand = (cmd: string, args: string[]) => {
