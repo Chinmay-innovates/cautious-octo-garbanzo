@@ -12,7 +12,8 @@
     "db:fresh": "payload migrate:fresh",
     "db:seed": "bun run src/scripts/seed.ts",
     "db:reset": "bun run src/scripts/db-reset.ts",
-    "format": "prettier --write . --check"
+    "format": "prettier --write --check . --ignore-path .prettierignore",
+    "format:check": "prettier --check . --ignore-path .prettierignore"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
