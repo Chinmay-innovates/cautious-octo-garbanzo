@@ -13,7 +13,18 @@
     "db:seed": "bun run src/scripts/seed.ts",
     "db:reset": "bun run src/scripts/db-reset.ts",
     "format": "prettier --write --check . --ignore-path .prettierignore",
-    "format:check": "prettier --check . --ignore-path .prettierignore"
+    "format:check": "prettier --check . --ignore-path .prettierignore",
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "**/*.{js,ts,jsx,tsx,json,md}": [
+      "prettier --write --ignore-path .prettierignore"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "bun run pre-commit"
+    }
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -59,6 +70,7 @@
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
     "graphql": "^16.8.1",
+    "husky": "^9.1.7",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.488.0",
     "next": "15.2.4",
@@ -87,6 +99,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
+    "lint-staged": "^15.5.1",
     "prettier": "^3.5.3",
     "tailwindcss": "^4",
     "typescript": "^5"
