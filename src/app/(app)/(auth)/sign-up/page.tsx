@@ -5,7 +5,7 @@ import { SignUpView } from '@/modules/auth/ui/views/sign-up-view';
 const Page = async () => {
   const session = await caller.auth.session();
 
-  if (session) redirect('/');
+  if (session.user) redirect('/');
 
   return <SignUpView />;
 };
