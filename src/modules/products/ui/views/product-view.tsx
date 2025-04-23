@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { formatCurrency, generateTenantURL } from '@/lib/utils';
-import { StartRating } from '@/components/start-rating';
+import { StarRating } from '@/components/star-rating';
 import { useTRPC } from '@/trpc/client';
 import { Button } from '@/components/ui/button';
 import { LinkIcon, StarIcon } from 'lucide-react';
@@ -60,14 +60,14 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
               </div>
               <div className="hidden lg:flex items-center justify-center px-6 py-4">
                 <div className="flex items-center gap-1">
-                  <StartRating rating={4} iconClassName="size-4" />
+                  <StarRating rating={4} iconClassName="size-4" />
                 </div>
               </div>
             </div>
 
             <div className="block lg:hidden px-6 py-4 items-center justify-center border-b">
               <div className="flex items-center gap-1">
-                <StartRating rating={4} iconClassName="size-4" />
+                <StarRating rating={4} iconClassName="size-4" />
                 <p className="text-base font-medium">{4} ratings</p>
               </div>
             </div>

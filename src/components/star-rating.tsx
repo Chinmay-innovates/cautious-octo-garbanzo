@@ -10,7 +10,7 @@ interface Props {
   iconClassName?: string;
   text?: string;
 }
-export const StartRating = ({ rating, className, iconClassName, text }: Props) => {
+export const StarRating = ({ rating, className, iconClassName, text }: Props) => {
   const safeRating = Math.max(Math.min(rating, MAX_RATING), MIN_RATING);
   return (
     <div className={cn('flex items-center gap-x-1', className)}>
