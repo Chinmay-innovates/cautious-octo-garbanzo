@@ -1,0 +1,25 @@
+name: Check Code Formatting
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1.2.5
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Check formatting with Prettier
+        run: bun run format:check
