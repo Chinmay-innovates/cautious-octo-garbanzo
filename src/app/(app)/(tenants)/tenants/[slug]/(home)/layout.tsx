@@ -5,10 +5,10 @@ import { Suspense } from 'react';
 
 interface Props {
   children: React.ReactNode;
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 const Layout = async ({ children, params }: Props) => {
-  const { slug } = params;
+  const { slug } = await params;
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(
     trpc.tenants.getOne.queryOptions({
