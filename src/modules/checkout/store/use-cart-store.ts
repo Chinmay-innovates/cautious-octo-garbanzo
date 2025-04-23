@@ -33,7 +33,7 @@ export const useCartStore = create<CartStore>()(
             ...state.tenantCart,
             [tenantSlug]: {
               productIds:
-                state.tenantCart.tenantSlug?.productIds?.filter((id) => id !== productId) || [],
+                state.tenantCart[tenantSlug]?.productIds?.filter((id) => id !== productId) || [],
             },
           },
         })),
