@@ -5,6 +5,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function generateTenantUrl(slug: string) {
+export function generateTenantURL(slug: string) {
   return `tenants/${slug}`;
+}
+
+export function formatCurrency(value: number | string) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 1,
+  }).format(Number(value));
 }
