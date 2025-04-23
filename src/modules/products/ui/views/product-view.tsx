@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { formatCurrency, generateTenantURL } from '@/lib/utils';
@@ -10,6 +11,18 @@ import { Button } from '@/components/ui/button';
 import { LinkIcon, StarIcon } from 'lucide-react';
 import { Fragment } from 'react';
 import { Progress } from '@/components/ui/progress';
+
+const CartButton = dynamic(
+  () => import('../components/cart-button').then((mod) => mod.CartButton),
+  {
+    ssr: false,
+    loading: () => (
+      <Button disabled className="flex-1 bg-pink-400">
+        Add to cart
+      </Button>
+    ),
+  },
+);
 
 // TODO: Add real ratings
 
@@ -26,7 +39,7 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
       <div className="border rounded-sm bg-white overflow-hidden">
         <div className="relative aspect-[3.9] border-b">
           <Image
-            src={data.image?.url || '/placeholder2.png'}
+            src={data.image?.url || '/placeholder3.png'}
             alt={data.name}
             fill
             className="object-contain"
@@ -85,9 +98,7 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
             <div className="border-t lg:border-t-0 lg:border-l h-full">
               <div className="flex flex-col gap-4 p-6 border-b">
                 <div className="flex flex-row items-center gap-2">
-                  <Button variant={'elevated'} className="flex-1 bg-pink-400">
-                    Add to cart
-                  </Button>
+                  <CartButton productId={productId} tenantSlug={tenantSlug} />
                   <Button
                     variant={'elevated'}
                     className="size-12"
