@@ -8,7 +8,7 @@ interface Props {
   params: { slug: string };
 }
 const Layout = async ({ children, params }: Props) => {
-  const { slug } = await params;
+  const { slug } = params;
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(
     trpc.tenants.getOne.queryOptions({
