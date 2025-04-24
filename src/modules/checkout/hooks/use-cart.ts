@@ -28,7 +28,7 @@ export const useCart = (tenantSlug: string) => {
     [productIds],
   );
 
-  const clearTenantCart = () => clearCart(tenantSlug);
+  const clearTenantCart = useCallback(() => clearCart(tenantSlug), [clearCart, tenantSlug]);
 
   const handleAddProduct = useCallback(
     (productId: string) => addProduct(tenantSlug, productId),

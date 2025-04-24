@@ -33,7 +33,7 @@ export const CheckoutView = ({ tenantSlug }: Props) => {
   if (isLoading) {
     return (
       <div className="lg:pt-16 pt-4 px-4 lg:px-12">
-        <EmptyState type="loader" />;
+        <EmptyState type="loader" />
       </div>
     );
   }
@@ -41,7 +41,7 @@ export const CheckoutView = ({ tenantSlug }: Props) => {
   if (data?.totalDocs === 0) {
     return (
       <div className="lg:pt-16 pt-4 px-4 lg:px-12">
-        <EmptyState />;
+        <EmptyState />
       </div>
     );
   }
