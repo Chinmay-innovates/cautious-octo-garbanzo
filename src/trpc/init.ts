@@ -1,8 +1,10 @@
 import { cache } from 'react';
 import superjson from 'superjson';
 import { getPayload } from 'payload';
-import { initTRPC } from '@trpc/server';
+import { initTRPC, TRPCError } from '@trpc/server';
 import configPromise from '@payload-config';
+import { headers as getHeaders } from 'next/headers';
+
 export const createTRPCContext = cache(async () => {
   /**
    * @see: https://trpc.io/docs/server/context
@@ -29,6 +31,27 @@ export const baseProcedure = t.procedure.use(async ({ next }) => {
   return next({
     ctx: {
       db: payload,
+    },
+  });
+});
+export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
+  const headers = await getHeaders();
+  const session = await ctx.db.auth({ headers });
+
+  if (!session.user) {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'User is not logged in',
+    });
+  }
+
+  return next({
+    ctx: {
+      ...ctx,
+      session: {
+        ...session,
+        user: session.user,
+      },
     },
   });
 });

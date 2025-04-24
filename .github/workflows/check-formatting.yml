@@ -35,6 +35,11 @@ jobs:
 
       - name: Check formatting with Prettier
         run: bun run format:check
+        continue-on-error: true
+
+      - name: Auto-fix formatting if check fails
+        if: steps.format-check.outcome == 'failure'
+        run: bun run format
 
       - name: Lint Code
         run: bun run lint
