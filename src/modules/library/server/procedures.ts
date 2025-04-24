@@ -24,7 +24,16 @@ export const libraryRouter = createTRPCRouter({
         },
       });
 
-      const productIds = data.docs.map((doc) => doc.product);
+      const productIds = data.docs.map((doc) => doc.product).filter(Boolean);
+
+      // Return early if no product IDs found
+      if (productIds.length === 0) {
+        return {
+          docs: [],
+          hasNextPage: false,
+          nextPage: undefined,
+        };
+      }
 
       const productsData = await ctx.db.find({
         collection: 'products',
@@ -38,13 +47,15 @@ export const libraryRouter = createTRPCRouter({
 
       return {
         ...productsData,
-        docs: productsData.docs.map((doc) => ({
-          ...doc,
-          image: doc.image as Media | null,
-          tenant: doc.tenant as Tenant & {
-            image: Media | null;
-          },
-        })),
+        docs: productsData.docs
+          .map((doc) => ({
+            ...doc,
+            image: doc.image as Media | null,
+            tenant: doc.tenant as Tenant & {
+              image: Media | null;
+            },
+          }))
+          .sort((a, b) => a.name.localeCompare(b.name)), // Sort by product name
       };
     }),
 });
