@@ -6,7 +6,7 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { ProductCard, ProductCardSkeleton } from './product-card';
 import { DEFAULT_LIMIT } from '@/constants';
 import { Button } from '@/components/ui/button';
-import { InboxIcon } from 'lucide-react';
+import { EmptyState } from '@/components/empty-state';
 import { cn } from '@/lib/utils';
 
 interface Props {
@@ -34,12 +34,7 @@ export const ProductList = ({ categorySlug, tenantSlug, narrowView }: Props) => 
   );
 
   if (data.pages?.[0]?.docs.length === 0) {
-    return (
-      <div className="border border-black border-dashed flex justify-center items-center p-8 flex-col gap-y-4 bg-white rounded-lg">
-        <InboxIcon size={30} />
-        <p className="text-base font-medium">No products found</p>
-      </div>
-    );
+    return <EmptyState />;
   }
 
   return (

@@ -1,5 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { formatCurrency } from '@/lib/utils';
 
 interface Props {
   minPrice?: string | null;
@@ -7,7 +8,7 @@ interface Props {
   onMinPriceChange: (value: string) => void;
   onMaxPriceChange: (value: string) => void;
 }
-export const formatAsCurrency = (value: string) => {
+const formatAsCurrency = (value: string) => {
   const numberValue = value.replace(/[^0-9.]/g, '');
   const parts = numberValue.split('.');
   const formattedValue = parts[0] + (parts.length > 1 ? '.' + parts[1]?.slice(0, 2) : '');
@@ -15,12 +16,8 @@ export const formatAsCurrency = (value: string) => {
 
   const numValue = parseFloat(formattedValue);
   if (isNaN(numValue)) return '';
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  }).format(numValue);
+
+  return formatCurrency(numValue);
 };
 export const PriceFilter = ({ minPrice, maxPrice, onMinPriceChange, onMaxPriceChange }: Props) => {
   const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {

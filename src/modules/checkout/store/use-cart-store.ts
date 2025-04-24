@@ -11,12 +11,11 @@ interface CartStore {
   removeProduct: (tenantSlug: string, productId: string) => void;
   clearCart: (tenantSlug: string) => void;
   clearAllCart: () => void;
-  getCartByTenant: (tenantSlug: string) => string[];
 }
 
 export const useCartStore = create<CartStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       tenantCart: {},
       addProduct: (tenantSlug, productId) =>
         set((state) => ({
@@ -50,7 +49,6 @@ export const useCartStore = create<CartStore>()(
         set({
           tenantCart: {},
         }),
-      getCartByTenant: (tenantSlug) => get().tenantCart[tenantSlug]?.productIds || [],
     }),
     {
       name: 'funroad-cart',
