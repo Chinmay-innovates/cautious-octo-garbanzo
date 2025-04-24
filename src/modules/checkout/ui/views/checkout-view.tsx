@@ -21,10 +21,9 @@ interface Props {
 export const CheckoutView = ({ tenantSlug }: Props) => {
   const trpc = useTRPC();
   const router = useRouter();
-  const toast = useCustomToast();
   const { productIds, clearCart, removeProduct } = useCart(tenantSlug);
   const [states, setStates] = useCheckoutStates();
-  const { warning } = useCustomToast();
+  const { warning, error: errorToast } = useCustomToast();
 
   const { data, error, isLoading } = useQuery(
     trpc.checkout.getProducts.queryOptions({ ids: productIds }),
@@ -42,7 +41,7 @@ export const CheckoutView = ({ tenantSlug }: Props) => {
           // TODO: Modify when subdomains enabled
           router.push('/sign-in');
         }
-        toast.error(error.message);
+        errorToast(error.message);
       },
     }),
   );
@@ -58,11 +57,10 @@ export const CheckoutView = ({ tenantSlug }: Props) => {
 
   useEffect(() => {
     if (error?.data?.code === 'NOT_FOUND') {
-      setStates({ success: false, cancel: false });
       clearCart();
       warning('Invalid products found, cart cleared');
     }
-  }, [error, clearCart, warning, setStates]);
+  }, [error, clearCart, warning]);
 
   if (isLoading) {
     return (
